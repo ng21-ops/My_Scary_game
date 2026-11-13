@@ -32,7 +32,7 @@ document.body.appendChild(renderer.domElement);
 // LUCES DEL HOSPITAL
 // ---------------------------------
 
-const ambient = new THREE.AmbientLight(0x505060, 0.65);
+const ambient = new THREE.AmbientLight(0xffffff, 1.8);
 scene.add(ambient);
 
 const ceilingLight = new THREE.PointLight(0x9aaacc, 20, 13);
@@ -41,35 +41,36 @@ ceilingLight.castShadow = true;
 scene.add(ceilingLight);
 
 // ---------------------------------
-// LINTERNA MEJORADA
+// LINTERNA MUCHO MÁS POTENTE
 // ---------------------------------
 
 const flashlight = new THREE.SpotLight(
-  0xe4f1ff,
-  450,
-  35,
-  Math.PI / 5,
-  0.65,
-  1.0
+  0xffffff,
+  1800,
+  60,
+  Math.PI / 3,
+  0.35,
+  1
 );
 
-flashlight.position.set(0, -0.05, 0.1);
+flashlight.position.set(0, 0, 0);
 flashlight.target.position.set(0, 0, -1);
 flashlight.castShadow = true;
 
-// Luz adicional para iluminar los objetos cercanos
+// Luz adicional que sigue al jugador
 const flashlightFill = new THREE.PointLight(
-  0xc9ddff,
-  18,
-  6,
-  1.4
+  0xffffff,
+  45,
+  30,
+  1
 );
 
-flashlightFill.position.set(0, -0.15, -0.25);
+flashlightFill.position.set(0, 0, 0);
 
 camera.add(flashlight);
 camera.add(flashlight.target);
 camera.add(flashlightFill);
+
 scene.add(camera);
 
 let flashlightOn = true;
