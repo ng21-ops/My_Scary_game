@@ -1,1 +1,56 @@
 
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE LAST PATIENT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="hud">
+    <h2>THE LAST PATIENT</h2>
+    <p id="objective">OBJETIVO: Explora la recepción</p>
+    <p id="battery">Linterna: 100%</p>
+    <p id="inventory">Inventario: vacío</p>
+    <p id="message"></p>
+  </div>
+
+  <div id="crosshair">+</div>
+
+  <div id="startScreen" class="screen">
+    <div class="panel">
+      <h1>THE LAST PATIENT</h1>
+      <p>EL HOSPITAL NUNCA ESTUVO VACÍO.</p>
+      <p>Despiertas sin recordar cómo llegaste aquí.</p>
+      <button id="startButton">ENTRAR AL HOSPITAL</button>
+      <p class="small">WASD: moverse | Mouse: mirar | F: linterna | E: interactuar | Shift: correr</p>
+    </div>
+  </div>
+
+  <div id="noteScreen" class="screen hidden">
+    <div class="panel">
+      <h2>DOCUMENTO ENCONTRADO</h2>
+      <p>ARCHIVO CONFIDENCIAL</p>
+      <p>Proyecto: THE LAST PATIENT.</p>
+      <p>Los tres experimentos siguen registrados en el sistema.</p>
+      <p>El científico responsable también aparece en los archivos.</p>
+      <p>Su nombre ha sido eliminado.</p>
+      <button id="closeNote">CERRAR DOCUMENTO</button>
+    </div>
+  </div>
+
+  <div id="endScreen" class="screen hidden">
+    <div class="panel">
+      <h1>LA PUERTA ESTÁ ABIERTA</h1>
+      <p>Has encontrado una salida de la recepción.</p>
+      <p>Pero algo te está esperando en el siguiente pasillo...</p>
+      <button onclick="location.reload()">VOLVER A JUGAR</button>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+</html>
