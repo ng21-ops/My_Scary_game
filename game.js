@@ -7,7 +7,7 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.m
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x050505);
-scene.fog = new THREE.FogExp2(0x080808, 0.018);
+scene.fog = new THREE.FogExp2(0x080808, 0.035);
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -25,7 +25,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.95;
+renderer.toneMappingExposure = 0.8;
 
 document.body.appendChild(renderer.domElement);
 
@@ -33,44 +33,30 @@ document.body.appendChild(renderer.domElement);
 // LUCES DEL HOSPITAL
 // ---------------------------------
 
-const ambient = new THREE.AmbientLight(0x505060, 0.3);
+const ambient = new THREE.AmbientLight(0x303040, 0.35);
 scene.add(ambient);
 
-const ceilingLight = new THREE.PointLight(0x9aaacc, 8, 12);
+const ceilingLight = new THREE.PointLight(0x9aaacc, 20, 13);
 ceilingLight.position.set(0, 3.5, 0);
 ceilingLight.castShadow = true;
 scene.add(ceilingLight);
 
-// ---------------------------------
-// LINTERNA
-// ---------------------------------
-
+// Linterna del protagonista
 const flashlight = new THREE.SpotLight(
-  0xe4f1ff,
-  180,
-  28,
-  Math.PI / 6,
-  0.6,
-  1.4
+  0xddeeff,
+  100,
+  25,
+  Math.PI / 7,
+  0.45,
+  1.5
 );
 
-flashlight.position.set(0, -0.05, 0.1);
+flashlight.position.set(0, 0, 0);
 flashlight.target.position.set(0, 0, -1);
 flashlight.castShadow = true;
 
-// Luz adicional para iluminar los objetos cercanos
-const flashlightFill = new THREE.PointLight(
-  0xc9ddff,
-  5,
-  5,
-  1.6
-);
-
-flashlightFill.position.set(0, -0.15, -0.25);
-
 camera.add(flashlight);
 camera.add(flashlight.target);
-camera.add(flashlightFill);
 scene.add(camera);
 
 let flashlightOn = true;
@@ -116,7 +102,7 @@ function createBox(name, x, y, z, width, height, depth, material) {
 // HABITACIÓN PRINCIPAL
 // ---------------------------------
 
-createBox("floor", 0, -0.15, 0, 30, 0.3, 30);
+createBox("floor", 0, -0.15, 0, 30, 0.3, 30, floorMaterial);
 
 createBox("leftWall", -15, 2, 0, 0.5, 4, 30, wallMaterial);
 createBox("rightWall", 15, 2, 0, 0.5, 4, 30, wallMaterial);
@@ -222,7 +208,6 @@ const body = new THREE.Mesh(
   new THREE.CylinderGeometry(0.35, 0.5, 1.6, 8),
   patientMaterial
 );
-
 body.position.y = 1.1;
 patient.add(body);
 
@@ -231,7 +216,6 @@ const head = new THREE.Mesh(
   new THREE.SphereGeometry(0.38, 12, 12),
   skinMaterial
 );
-
 head.position.y = 2.15;
 patient.add(head);
 
@@ -240,7 +224,6 @@ const eye1 = new THREE.Mesh(
   new THREE.SphereGeometry(0.065, 8, 8),
   eyeMaterial
 );
-
 eye1.position.set(-0.14, 2.2, -0.32);
 patient.add(eye1);
 
@@ -290,7 +273,8 @@ createBox(
   deskMaterial
 );
 
-// Armario
+// Armario donde el jugador podrá imaginar
+// futuras mecánicas de escondite
 createBox(
   "locker",
   11, 1.5, -7,
@@ -302,8 +286,7 @@ createBox(
 const flickerLights = [];
 
 for (let i = 0; i < 4; i++) {
-  const light = new THREE.PointLight(0x8a9bb5, 5, 8);
-
+  const light = new THREE.PointLight(0x8a9bb5, 12, 9);
   light.position.set(
     i % 2 === 0 ? -10 : 10,
     3.3,
@@ -385,7 +368,6 @@ document.addEventListener("keydown", (event) => {
   if (event.code === "KeyF" && gameStarted) {
     flashlightOn = !flashlightOn;
     flashlight.visible = flashlightOn;
-    flashlightFill.visible = flashlightOn;
   }
 
   if (event.code === "KeyE" && gameStarted) {
@@ -566,7 +548,6 @@ function updateLighting(delta, elapsed) {
       battery = 0;
       flashlightOn = false;
       flashlight.visible = false;
-      flashlightFill.visible = false;
       message.textContent = "BATERÍA AGOTADA";
     }
   }
@@ -581,12 +562,12 @@ function updateLighting(delta, elapsed) {
     );
 
     light.intensity = flicker > -0.7
-      ? 3 + Math.random() * 1.5
+      ? 9 + Math.random() * 3
       : 0;
   });
 
   ceilingLight.intensity =
-    6 + Math.sin(elapsed * 5) * 1.5;
+    16 + Math.sin(elapsed * 5) * 3;
 }
 
 // ---------------------------------
