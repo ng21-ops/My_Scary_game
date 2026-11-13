@@ -542,7 +542,7 @@ function updatePatient(delta, elapsed) {
 
 function updateLighting(delta, elapsed) {
   if (flashlightOn && battery > 0) {
-    battery -= delta * 0.15;
+    battery -= delta * 0.25;
 
     if (battery <= 0) {
       battery = 0;
