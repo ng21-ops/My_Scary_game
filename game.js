@@ -379,6 +379,13 @@ document.addEventListener("keyup", (event) => {
   keys[event.code] = false;
 });
 
+// Evitar que una tecla quede presionada si el jugador cambia de pestaña.
+window.addEventListener("blur", () => {
+  for (const key in keys) {
+    keys[key] = false;
+  }
+});
+
 // ---------------------------------
 // INTERACCIONES
 // ---------------------------------
@@ -445,9 +452,14 @@ function interact() {
 const clock = new THREE.Clock();
 
 function movePlayer(delta) {
-  if (!document.pointerLockElement) return;
+  // El jugador puede moverse con WASD aunque el mouse no esté bloqueado.
+  if (!gameStarted) return;
 
-  const speed = keys["ShiftLeft"] ? 6 : 3.5;
+  // No permitir movimiento mientras se lee el documento o se muestra el final.
+  if (!noteScreen.classList.contains("hidden")) return;
+  if (!endScreen.classList.contains("hidden")) return;
+
+  const speed = (keys["ShiftLeft"] || keys["ShiftRight"]) ? 6 : 3.5;
 
   const forward = new THREE.Vector3(
     Math.sin(yaw),
@@ -580,7 +592,7 @@ function animate() {
   const delta = Math.min(clock.getDelta(), 0.05);
   const elapsed = clock.elapsedTime;
 
-  if (gameStarted && document.pointerLockElement) {
+  if (gameStarted) {
     movePlayer(delta);
   }
 
@@ -602,3 +614,4 @@ window.addEventListener("resize", () => {
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
