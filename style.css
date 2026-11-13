@@ -1,1 +1,118 @@
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  background: #000;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+canvas {
+  display: block;
+}
+
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  color: #ddd;
+  text-shadow: 0 0 8px black;
+  pointer-events: none;
+}
+
+#hud h2 {
+  color: #b5b5b5;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+}
+
+#hud p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+#message {
+  color: #ff5555;
+  font-weight: bold;
+}
+
+#crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 24px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.94);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  text-align: center;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.panel {
+  max-width: 600px;
+  width: 100%;
+  padding: 35px;
+  background: #101010;
+  border: 1px solid #444;
+  box-shadow: 0 0 40px #000;
+}
+
+.panel h1 {
+  color: #a80000;
+  font-size: clamp(28px, 6vw, 48px);
+  letter-spacing: 5px;
+  margin-bottom: 20px;
+}
+
+.panel h2 {
+  color: #b00000;
+  margin-bottom: 20px;
+}
+
+.panel p {
+  color: #bbb;
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.panel button {
+  background: #720000;
+  border: 1px solid #a00000;
+  color: white;
+  padding: 14px 25px;
+  margin: 20px 0;
+  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+.panel button:hover {
+  background: #a00000;
+}
+
+.small {
+  font-size: 12px;
+  color: #777 !important;
+}
+
